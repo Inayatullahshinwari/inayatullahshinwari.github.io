@@ -202,13 +202,18 @@
                 <div class="space-y-4">
                     <template x-for="project in projects" :key="project.name">
                         <a :href="project.url" target="_blank"
-                           class="group block rounded border border-[#2a2a2a] bg-[#111113] p-4 hover:border-[#22c55e]/30 transition-colors">
+                           class="group block rounded border border-[#2a2a2a] bg-[#111113] p-4 hover:border-[#22c55e]/30 transition-colors"
+                           :class="{ 'opacity-50 cursor-default pointer-events-none': project.wip }">
                             <div class="flex items-start justify-between">
                                 <div>
-                                    <div class="text-sm font-medium text-[#e4e4e7] group-hover:text-[#22c55e] transition-colors" x-text="project.name"></div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sm font-medium text-[#e4e4e7] group-hover:text-[#22c55e] transition-colors" x-text="project.name"></span>
+                                        <span x-show="project.wip" class="text-[9px] text-[#f97316] bg-[#f97316]/10 px-1.5 py-0.5 rounded uppercase tracking-wider">wip</span>
+                                        <span x-show="project.soon" class="text-[9px] text-[#71717a] bg-[#2a2a2a] px-1.5 py-0.5 rounded uppercase tracking-wider">soon</span>
+                                    </div>
                                     <div class="text-xs text-[#71717a] mt-1" x-text="project.desc"></div>
                                 </div>
-                                <span class="text-[#71717a] text-xs opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                                <span class="text-[#71717a] text-xs opacity-0 group-hover:opacity-100 transition-opacity" x-show="!project.wip && !project.soon">↗</span>
                             </div>
                             <div class="flex gap-2 mt-3">
                                 <template x-for="tech in project.tech" :key="tech">
@@ -363,6 +368,20 @@
                         desc: 'Enterprise platform with ERPNext integration, REST APIs, and workflow automation.',
                         tech: ['laravel', 'erpnext', 'postgresql', 'docker'],
                         url: 'https://aogc.dev/docs'
+                    },
+                    {
+                        name: 'pharmacy-management',
+                        desc: 'Offline-first desktop pharmacy system with real-time sync and inventory tracking.',
+                        tech: ['tauri', 'nestjs', 'prisma'],
+                        url: '',
+                        wip: true
+                    },
+                    {
+                        name: 'more projects',
+                        desc: 'Building new things. Check back soon or follow me on GitHub.',
+                        tech: ['stay tuned'],
+                        url: 'https://github.com/Inayatullahshinwari',
+                        soon: true
                     },
                 ],
                 toggleTheme() {
