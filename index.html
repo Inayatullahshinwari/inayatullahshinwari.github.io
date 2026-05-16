@@ -1,397 +1,366 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inayatullah — Full-Stack Developer</title>
-    <meta name="description" content="Full-stack developer specializing in web applications, mobile apps, and AI solutions.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    <title>inayatullah — senior software engineer</title>
+    <meta name="description" content="Senior software engineer specializing in full-stack development, API architecture, and system design.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>_</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
                         mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                     },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'gradient': 'gradient 8s ease infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        gradient: {
-                            '0%, 100%': { backgroundPosition: '0% 50%' },
-                            '50%': { backgroundPosition: '100% 50%' },
-                        }
-                    }
                 }
             }
         }
     </script>
     <style>
         [x-cloak] { display: none !important; }
-        .gradient-text {
-            background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6, #06b6d4);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradient 8s ease infinite;
-        }
-        .hero-glow {
-            background: radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.15), transparent 50%);
-        }
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25);
-        }
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        ::selection { background: #22c55e; color: #0a0a0a; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
     </style>
 </head>
-<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans antialiased"
+<body class="bg-[#0a0a0a] text-[#e4e4e7] font-mono antialiased"
       x-data="portfolio()" x-init="init()">
 
-    <!-- NAVIGATION -->
-    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl"
-         :class="{ 'shadow-lg': scrolled }">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-            <div class="flex items-center justify-between h-16">
-                <a href="#hero" class="text-lg font-bold tracking-tight">
-                    <span class="text-orange-500">&lt;</span>Inayatullah<span class="text-orange-500">/&gt;</span>
-                </a>
-                <div class="hidden md:flex items-center gap-1">
-                    <template x-for="item in navItems" :key="item.id">
-                        <a :href="'#' + item.id"
-                           class="px-3 py-2 rounded-lg text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
-                           x-text="item.label"></a>
-                    </template>
-                </div>
+    <!-- TOP BAR -->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a] border-b border-[#2a2a2a]">
+        <div class="flex items-center justify-between px-4 h-8 text-xs">
+            <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2">
-                    <button @click="toggleTheme()" class="flex size-9 items-center justify-center rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all">
-                        <span x-text="dark ? '🌙' : '☀️'"></span>
-                    </button>
-                    <a href="#contact" class="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600 transition-all">
-                        Let's Talk
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-        <div class="absolute inset-0 hero-glow"></div>
-        <div class="absolute inset-0 opacity-30 dark:opacity-20" style="background-image: radial-gradient(circle at 1px 1px, rgb(212 212 216 / 0.3) 1px, transparent 0); background-size: 40px 40px;"></div>
-
-        <div class="relative mx-auto max-w-6xl px-4 sm:px-6 text-center">
-            <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-400">
-                <span class="relative flex size-2">
-                    <span class="absolute inline-flex size-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                    <span class="relative inline-flex size-2 rounded-full bg-green-500"></span>
-                </span>
-                Available for opportunities
-            </div>
-
-            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none mb-6">
-                Hi, I'm <span class="gradient-text">Inayatullah</span>
-            </h1>
-
-            <p class="mx-auto max-w-2xl text-lg sm:text-xl text-zinc-500 dark:text-zinc-400 mb-10 leading-relaxed">
-                Full-stack developer passionate about building <span class="text-zinc-900 dark:text-zinc-100 font-medium">beautiful web apps</span>,
-                <span class="text-zinc-900 dark:text-zinc-100 font-medium">mobile solutions</span>, and
-                <span class="text-zinc-900 dark:text-zinc-100 font-medium">AI-powered tools</span>.
-                Currently pursuing my Master's in Computer Science.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#projects" class="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-8 py-4 text-base font-semibold text-white hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/25 hover:-translate-y-0.5 transition-all">
-                    View My Work
-                    <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
-                </a>
-                <a href="#contact" class="inline-flex items-center gap-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-8 py-4 text-base font-semibold hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                    Get In Touch
-                </a>
-            </div>
-
-            <div class="mt-16 flex items-center justify-center gap-8 text-zinc-400">
-                <a href="https://github.com/Inayatullahshinwari" target="_blank" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="GitHub">
-                    <svg class="size-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                </a>
-                <a href="https://linkedin.com/in/inayatullahshinwari" target="_blank" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="LinkedIn">
-                    <svg class="size-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                </a>
-                <a href="mailto:your.email@example.com" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="Email">
-                    <svg class="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                </a>
-            </div>
-        </div>
-
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <svg class="size-6 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-        </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="py-24 border-t border-zinc-200 dark:border-zinc-800">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <span class="text-sm font-semibold text-orange-500 uppercase tracking-wider">About Me</span>
-                    <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">Passionate about turning ideas into <span class="gradient-text">real products</span></h2>
-                    <p class="mt-6 text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                        I'm a Master's student in Computer Science at Kabul University with a deep passion for software development. I specialize in building full-stack web applications, mobile apps, and AI-powered tools.
-                    </p>
-                    <p class="mt-4 text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                        My journey started with curiosity about how software works, and has evolved into a career focused on creating impactful solutions. I believe in clean code, user-centric design, and continuous learning.
-                    </p>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <template x-for="stat in stats" :key="stat.label">
-                        <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-6 text-center card-hover">
-                            <div class="text-3xl font-black text-orange-500" x-text="stat.value"></div>
-                            <div class="mt-1 text-sm text-zinc-500 dark:text-zinc-400" x-text="stat.label"></div>
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="py-24 border-t border-zinc-200 dark:border-zinc-800">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-            <div class="text-center mb-16">
-                <span class="text-sm font-semibold text-orange-500 uppercase tracking-wider">Skills & Tools</span>
-                <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">Technologies I work with</h2>
-            </div>
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <template x-for="category in skills" :key="category.name">
-                    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 card-hover">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="flex size-10 items-center justify-center rounded-xl" :class="category.bg">
-                                <span class="text-xl" x-text="category.icon"></span>
-                            </div>
-                            <h3 class="font-semibold" x-text="category.name"></h3>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <template x-for="skill in category.items" :key="skill">
-                                <span class="rounded-lg bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 text-sm text-zinc-600 dark:text-zinc-400" x-text="skill"></span>
-                            </template>
-                        </div>
+                    <div class="flex gap-1.5">
+                        <div class="size-3 rounded-full bg-[#ff5f57]"></div>
+                        <div class="size-3 rounded-full bg-[#febc2e]"></div>
+                        <div class="size-3 rounded-full bg-[#28c840]"></div>
                     </div>
+                    <span class="text-[#71717a] ml-2">~/portfolio</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-[#71717a]">
+                <button @click="toggleTheme()" class="hover:text-[#e4e4e7] transition-colors" x-text="dark ? '◐' : '◑'"></button>
+                <a href="https://github.com/Inayatullahshinwari" target="_blank" class="hover:text-[#e4e4e7] transition-colors">github</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="hidden lg:flex fixed left-0 top-8 bottom-0 w-56 bg-[#1a1a1a] border-r border-[#2a2a2a] flex-col">
+        <div class="px-4 py-3 text-[10px] font-sans uppercase tracking-wider text-[#71717a]">Explorer</div>
+        <div class="px-2">
+            <div class="flex items-center gap-1 px-2 py-1 text-xs text-[#71717a]">
+                <span>▼</span>
+                <span class="font-semibold text-[#e4e4e7]">inayatullah</span>
+            </div>
+            <div class="ml-4">
+                <template x-for="item in navItems" :key="item.id">
+                    <a :href="'#' + item.id"
+                       class="flex items-center gap-2 px-2 py-1 text-xs hover:bg-[#2a2a2a] rounded transition-colors"
+                       :class="activeSection === item.id ? 'bg-[#2a2a2a] text-[#e4e4e7]' : 'text-[#a1a1aa]'">
+                        <span x-text="item.icon"></span>
+                        <span x-text="item.file"></span>
+                    </a>
                 </template>
             </div>
         </div>
-    </section>
+        <div class="mt-auto px-4 py-3 border-t border-[#2a2a2a]">
+            <div class="text-[10px] text-[#71717a]">6+ years experience</div>
+            <div class="text-[10px] text-[#71717a]">Kabul, Afghanistan</div>
+        </div>
+    </div>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="py-24 border-t border-zinc-200 dark:border-zinc-800">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-            <div class="text-center mb-16">
-                <span class="text-sm font-semibold text-orange-500 uppercase tracking-wider">Projects</span>
-                <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">Things I've built</h2>
-                <p class="mt-4 text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto">A selection of projects that showcase my skills in web development, mobile apps, and AI.</p>
-            </div>
+    <!-- MAIN -->
+    <main class="lg:ml-56 pt-8">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 lg:py-20">
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <template x-for="project in projects" :key="project.title">
-                    <div class="group rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden card-hover">
-                        <div class="h-48 bg-gradient-to-br from-orange-500/20 via-pink-500/20 to-purple-500/20 dark:from-orange-500/10 dark:via-pink-500/10 dark:to-purple-500/10 flex items-center justify-center">
-                            <span class="text-6xl" x-text="project.emoji"></span>
+            <!-- HERO -->
+            <section id="hero" class="mb-20">
+                <div class="text-sm text-[#22c55e] mb-4">$ whoami</div>
+                <h1 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="text-[#71717a]">const</span>
+                    <span class="text-[#60a5fa]"> engineer</span>
+                    <span class="text-[#e4e4e7]"> = {</span>
+                </h1>
+                <div class="ml-8 space-y-1">
+                    <p class="text-[#e4e4e7]">
+                        <span class="text-[#71717a]">name:</span>
+                        <span class="text-[#f97316]">"Inayatullah Shinwari"</span>,
+                    </p>
+                    <p class="text-[#e4e4e7]">
+                        <span class="text-[#71717a]">role:</span>
+                        <span class="text-[#f97316]">"Senior Software Engineer"</span>,
+                    </p>
+                    <p class="text-[#e4e4e7]">
+                        <span class="text-[#71717a]">location:</span>
+                        <span class="text-[#f97316]">"Kabul, Afghanistan"</span>,
+                    </p>
+                    <p class="text-[#e4e4e7]">
+                        <span class="text-[#71717a]">experience:</span>
+                        <span class="text-[#f97316]">"6+ years"</span>,
+                    </p>
+                    <p class="text-[#e4e4e7]">
+                        <span class="text-[#71717a]">focus:</span>
+                        <span class="text-[#f97316]">"Full-Stack, API Architecture, Systems"</span>,
+                    </p>
+                    <p class="text-[#e4e4e7]">
+                        <span class="text-[#71717a]">education:</span>
+                        <span class="text-[#f97316]">"MSc Computer Science (in progress)"</span>
+                    </p>
+                </div>
+                <p class="text-[#e4e4e7] mt-2">};</p>
+
+                <div class="mt-8 flex items-center gap-2 text-sm">
+                    <span class="text-[#22c55e]">$</span>
+                    <span class="text-[#a1a1aa]" x-text="typedText"></span>
+                    <span class="cursor-blink text-[#22c55e]">▊</span>
+                </div>
+
+                <div class="mt-8 flex items-center gap-4 text-xs">
+                    <a href="https://github.com/Inayatullahshinwari" target="_blank" class="text-[#71717a] hover:text-[#22c55e] transition-colors">github</a>
+                    <span class="text-[#2a2a2a]">|</span>
+                    <a href="mailto:inayatullah.shinwari.official@gmail.com" class="text-[#71717a] hover:text-[#22c55e] transition-colors">email</a>
+                    <span class="text-[#2a2a2a]">|</span>
+                    <a href="https://www.linkedin.com/in/inayatullah-shinwari-9ba0511bb/" target="_blank" class="text-[#71717a] hover:text-[#22c55e] transition-colors">linkedin</a>
+                    <span class="text-[#2a2a2a]">|</span>
+                    <a href="https://x.com/IUShinwari" target="_blank" class="text-[#71717a] hover:text-[#22c55e] transition-colors">x</a>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section id="about" class="mb-20">
+                <div class="text-sm text-[#22c55e] mb-4">$ cat about.md</div>
+                <div class="space-y-4 text-[#a1a1aa] leading-relaxed">
+                    <p>
+                        Senior software engineer with <span class="text-[#e4e4e7]">6+ years</span> of experience building
+                        production-grade systems across web, desktop, and infrastructure. I specialize in
+                        <span class="text-[#e4e4e7]">API architecture</span>, <span class="text-[#e4e4e7]">ERP implementation</span>,
+                        and <span class="text-[#e4e4e7]">full-stack development</span> with Python, PHP, and JavaScript ecosystems.
+                    </p>
+                    <p>
+                        Currently engineering scalable platforms at <span class="text-[#e4e4e7]">Afghanistan Oil & Gas Corporation</span>,
+                        previously led development teams at <span class="text-[#e4e4e7]">Green State Power</span> and built
+                        critical systems for <span class="text-[#e4e4e7]">Salam University</span>.
+                    </p>
+                    <p>
+                        I care about clean architecture, developer experience, and shipping systems that last.
+                    </p>
+                </div>
+            </section>
+
+            <!-- EXPERIENCE -->
+            <section id="experience" class="mb-20">
+                <div class="text-sm text-[#22c55e] mb-4">$ cat experience.log</div>
+                <div class="space-y-8">
+                    <template x-for="item in timeline" :key="item.title">
+                        <div class="border-l border-[#2a2a2a] pl-4">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-xs text-[#22c55e] font-mono" x-text="item.period"></span>
+                                <span class="text-[#2a2a2a]">·</span>
+                                <span class="text-xs text-[#71717a]" x-text="item.type || ''"></span>
+                            </div>
+                            <div class="text-sm text-[#e4e4e7] font-medium mt-1" x-text="item.title"></div>
+                            <div class="text-xs text-[#a1a1aa]" x-text="item.org"></div>
+                            <ul class="mt-3 space-y-1.5">
+                                <template x-for="detail in item.details" :key="detail">
+                                    <li class="text-xs text-[#71717a] leading-relaxed" x-text="'→ ' + detail"></li>
+                                </template>
+                            </ul>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold mb-2" x-text="project.title"></h3>
-                            <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-4 line-clamp-3" x-text="project.desc"></p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
+                    </template>
+                </div>
+            </section>
+
+            <!-- SKILLS -->
+            <section id="skills" class="mb-20">
+                <div class="text-sm text-[#22c55e] mb-4">$ ls skills/</div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <template x-for="skill in skills" :key="skill.name">
+                        <div class="rounded border border-[#2a2a2a] bg-[#111113] px-4 py-3 hover:border-[#22c55e]/30 transition-colors">
+                            <div class="text-xs text-[#71717a] mb-1" x-text="skill.category"></div>
+                            <div class="text-sm text-[#e4e4e7]" x-text="skill.name"></div>
+                        </div>
+                    </template>
+                </div>
+            </section>
+
+            <!-- PROJECTS -->
+            <section id="projects" class="mb-20">
+                <div class="text-sm text-[#22c55e] mb-4">$ ls projects/</div>
+                <div class="space-y-4">
+                    <template x-for="project in projects" :key="project.name">
+                        <a :href="project.url" target="_blank"
+                           class="group block rounded border border-[#2a2a2a] bg-[#111113] p-4 hover:border-[#22c55e]/30 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="text-sm font-medium text-[#e4e4e7] group-hover:text-[#22c55e] transition-colors" x-text="project.name"></div>
+                                    <div class="text-xs text-[#71717a] mt-1" x-text="project.desc"></div>
+                                </div>
+                                <span class="text-[#71717a] text-xs opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                            </div>
+                            <div class="flex gap-2 mt-3">
                                 <template x-for="tech in project.tech" :key="tech">
-                                    <span class="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-1 text-xs font-mono text-zinc-600 dark:text-zinc-400" x-text="tech"></span>
+                                    <span class="text-[10px] text-[#a1a1aa] bg-[#1a1a1a] px-2 py-0.5 rounded" x-text="tech"></span>
                                 </template>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <a :href="project.github" target="_blank" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                                    <svg class="size-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                                    Code
-                                </a>
-                                <a :href="project.demo" target="_blank" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" x-show="project.demo">
-                                    <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0 0L10 14"></path></svg>
-                                    Demo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </section>
+                        </a>
+                    </template>
+                </div>
+            </section>
 
-    <!-- EXPERIENCE / EDUCATION -->
-    <section id="experience" class="py-24 border-t border-zinc-200 dark:border-zinc-800">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-            <div class="text-center mb-16">
-                <span class="text-sm font-semibold text-orange-500 uppercase tracking-wider">Experience & Education</span>
-                <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">My journey so far</h2>
-            </div>
-
-            <div class="max-w-3xl mx-auto space-y-8">
-                <template x-for="item in timeline" :key="item.title">
-                    <div class="relative pl-8 border-l-2 border-zinc-200 dark:border-zinc-800">
-                        <div class="absolute -left-[9px] top-0 size-4 rounded-full bg-orange-500 ring-4 ring-white dark:ring-zinc-950"></div>
-                        <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 card-hover">
-                            <span class="text-sm font-mono text-orange-500" x-text="item.period"></span>
-                            <h3 class="mt-1 text-lg font-semibold" x-text="item.title"></h3>
-                            <p class="text-sm text-zinc-500 dark:text-zinc-400" x-text="item.org"></p>
-                            <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed" x-text="item.desc"></p>
-                        </div>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="py-24 border-t border-zinc-200 dark:border-zinc-800">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-            <div class="max-w-2xl mx-auto text-center">
-                <span class="text-sm font-semibold text-orange-500 uppercase tracking-wider">Get In Touch</span>
-                <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">Let's work together</h2>
-                <p class="mt-4 text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                    Have a project in mind, a job opportunity, or just want to say hi? I'm always open to new conversations and collaborations.
-                </p>
-
-                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="mailto:your.email@example.com" class="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-8 py-4 text-base font-semibold text-white hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/25 hover:-translate-y-0.5 transition-all">
-                        <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        Send an Email
+            <!-- CONTACT -->
+            <section id="contact" class="mb-20">
+                <div class="text-sm text-[#22c55e] mb-4">$ ./contact.sh</div>
+                <p class="text-[#a1a1aa]">Open to opportunities, collaborations, and interesting conversations.</p>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <a href="mailto:inayatullah.shinwari.official@gmail.com" class="inline-flex items-center gap-2 rounded border border-[#2a2a2a] bg-[#111113] px-4 py-2 text-sm hover:border-[#22c55e]/30 hover:text-[#22c55e] transition-colors">
+                        <span>✉</span> email
                     </a>
-                    <a href="https://github.com/Inayatullahshinwari" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-8 py-4 text-base font-semibold hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                        <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        GitHub
+                    <a href="https://github.com/Inayatullahshinwari" target="_blank" class="inline-flex items-center gap-2 rounded border border-[#2a2a2a] bg-[#111113] px-4 py-2 text-sm hover:border-[#22c55e]/30 hover:text-[#22c55e] transition-colors">
+                        <span>⌘</span> github
+                    </a>
+                    <a href="https://www.linkedin.com/in/inayatullah-shinwari-9ba0511bb/" target="_blank" class="inline-flex items-center gap-2 rounded border border-[#2a2a2a] bg-[#111113] px-4 py-2 text-sm hover:border-[#22c55e]/30 hover:text-[#22c55e] transition-colors">
+                        <span>◆</span> linkedin
+                    </a>
+                    <a href="https://x.com/IUShinwari" target="_blank" class="inline-flex items-center gap-2 rounded border border-[#2a2a2a] bg-[#111113] px-4 py-2 text-sm hover:border-[#22c55e]/30 hover:text-[#22c55e] transition-colors">
+                        <span>𝕏</span> x
                     </a>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-zinc-200 dark:border-zinc-800 py-8">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p class="text-sm text-zinc-400">© 2026 Inayatullah. Built with ❤️</p>
-            <div class="flex items-center gap-4">
-                <a href="https://github.com/Inayatullahshinwari" target="_blank" class="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">GitHub</a>
-                <a href="https://linkedin.com/in/inayatullahshinwari" target="_blank" class="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">LinkedIn</a>
-                <a href="mailto:your.email@example.com" class="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Email</a>
-            </div>
+            <!-- FOOTER -->
+            <footer class="border-t border-[#2a2a2a] pt-6 text-xs text-[#71717a]">
+                <p>© 2026 inayatullah — built with vim, tmux, and too much coffee.</p>
+            </footer>
         </div>
-    </footer>
+    </main>
 
     <script>
         function portfolio() {
             return {
                 dark: true,
-                scrolled: false,
+                activeSection: 'hero',
+                typedText: '',
+                fullText: 'echo "building systems that scale..."',
                 navItems: [
-                    { id: 'about', label: 'About' },
-                    { id: 'skills', label: 'Skills' },
-                    { id: 'projects', label: 'Projects' },
-                    { id: 'experience', label: 'Experience' },
-                    { id: 'contact', label: 'Contact' },
-                ],
-                stats: [
-                    { value: '3+', label: 'Years Coding' },
-                    { value: '10+', label: 'Projects Built' },
-                    { value: '5+', label: 'Technologies' },
-                    { value: 'MSc', label: 'In Progress' },
-                ],
-                skills: [
-                    { name: 'Frontend', icon: '🎨', bg: 'bg-pink-100 dark:bg-pink-900/30', items: ['HTML/CSS', 'JavaScript', 'Vue.js', 'Tailwind CSS', 'Alpine.js'] },
-                    { name: 'Backend', icon: '⚙️', bg: 'bg-blue-100 dark:bg-blue-900/30', items: ['Python', 'Django', 'PHP', 'Laravel', 'REST APIs'] },
-                    { name: 'Mobile', icon: '📱', bg: 'bg-green-100 dark:bg-green-900/30', items: ['Flutter', 'Dart', 'Firebase'] },
-                    { name: 'Database', icon: '🗄️', bg: 'bg-purple-100 dark:bg-purple-900/30', items: ['PostgreSQL', 'MySQL', 'SQLite', 'Redis'] },
-                    { name: 'DevOps & Tools', icon: '🔧', bg: 'bg-orange-100 dark:bg-orange-900/30', items: ['Git', 'GitHub', 'Linux', 'Docker', 'CI/CD'] },
-                    { name: 'AI & ML', icon: '🤖', bg: 'bg-cyan-100 dark:bg-cyan-900/30', items: ['Python', 'TensorFlow', 'Whisper', 'NLP', 'Data Science'] },
-                ],
-                projects: [
-                    {
-                        title: 'Git Cheatsheet',
-                        desc: 'A beautiful, fast, and comprehensive Git reference tool with instant search, category filtering, dark mode, and one-click copy.',
-                        tech: ['Tailwind CSS', 'Alpine.js', 'HTML'],
-                        emoji: '📋',
-                        github: 'https://github.com/Inayatullahshinwari/git-cheatsheet',
-                        demo: 'https://inayatullahshinwari.github.io/git-cheatsheet'
-                    },
-                    {
-                        title: 'AOGC Platform',
-                        desc: 'Web platform for the Afghan Open Government Coalition with user management, content management, and data visualization.',
-                        tech: ['Django', 'PostgreSQL', 'Tailwind'],
-                        emoji: '🌐',
-                        github: 'https://github.com/Inayatullahshinwari',
-                        demo: ''
-                    },
-                    {
-                        title: 'Portfolio Website',
-                        desc: 'Personal portfolio website showcasing my projects, skills, and experience with modern design and smooth animations.',
-                        tech: ['HTML', 'CSS', 'JavaScript'],
-                        emoji: '👨‍💻',
-                        github: 'https://github.com/Inayatullahsh/inayatullahsh.github.io',
-                        demo: 'https://inayatullahsh.github.io'
-                    },
-                    {
-                        title: 'Mobile App (Flutter)',
-                        desc: 'Cross-platform mobile application built with Flutter, featuring clean UI and smooth performance.',
-                        tech: ['Flutter', 'Dart', 'Firebase'],
-                        emoji: '📱',
-                        github: 'https://github.com/Inayatullahshinwari',
-                        demo: ''
-                    },
-                    {
-                        title: 'Pashto ASR Research',
-                        desc: 'Master\'s thesis research on Automatic Speech Recognition for Pashto language using Whisper and error-aware training.',
-                        tech: ['Python', 'Whisper', 'TensorFlow', 'NLP'],
-                        emoji: '🎙️',
-                        github: '',
-                        demo: ''
-                    },
-                    {
-                        title: 'More Coming Soon',
-                        desc: 'I\'m constantly building new projects. Check back soon or follow me on GitHub for updates.',
-                        tech: ['Stay Tuned'],
-                        emoji: '🚀',
-                        github: 'https://github.com/Inayatullahshinwari',
-                        demo: ''
-                    },
+                    { id: 'hero', icon: '◉', file: 'index.js' },
+                    { id: 'about', icon: '◈', file: 'about.md' },
+                    { id: 'experience', icon: '◈', file: 'experience.log' },
+                    { id: 'skills', icon: '◈', file: 'skills/' },
+                    { id: 'projects', icon: '◈', file: 'projects/' },
+                    { id: 'contact', icon: '◈', file: 'contact.sh' },
                 ],
                 timeline: [
                     {
-                        period: '2024 — Present',
-                        title: 'Master of Science in Computer Science',
-                        org: 'Kabul University',
-                        desc: 'Specializing in AI/ML with thesis research on Pashto Automatic Speech Recognition. Coursework includes Machine Learning, Research Methodologies, and Enterprise Architecture.'
+                        period: '2024 — present',
+                        title: 'Full Stack Web Developer',
+                        org: 'Afghanistan Oil & Gas Corporation (AOGC)',
+                        type: 'On-site',
+                        details: [
+                            'Architected scalable REST APIs with Laravel and JWT authentication.',
+                            'Led ERPNext customization for workflow automation and data governance.',
+                            'Streamlined deployments using Docker and Git, reducing release cycles.',
+                            'Produced comprehensive API documentation and ERDs for team onboarding.',
+                        ]
                     },
                     {
-                        period: '2023 — Present',
-                        title: 'Full-Stack Developer',
-                        org: 'Freelance & Personal Projects',
-                        desc: 'Building web applications, mobile apps, and open-source tools. Focused on Django, Laravel, Vue.js, and Flutter.'
+                        period: '2024 — 2025',
+                        title: 'Full Stack Developer & Team Lead',
+                        org: 'Green State Power (GSP)',
+                        type: 'Remote',
+                        details: [
+                            'Led engineering team to deliver secure web apps and QR-based document systems.',
+                            'Integrated platforms via RESTful APIs (Django, Laravel) for seamless data flow.',
+                            'Automated deployments and optimized cloud infrastructure for high availability.',
+                            'Established coding standards and mentored developers, accelerating delivery.',
+                        ]
                     },
                     {
-                        period: '2020 — 2024',
-                        title: 'Bachelor of Computer Science',
-                        org: 'Kabul University',
-                        desc: 'Foundation in programming, data structures, algorithms, databases, and software engineering principles.'
+                        period: '2023 — 2024',
+                        title: 'Full Stack Developer & IT Administrator',
+                        org: 'Salam University',
+                        type: 'On-site',
+                        details: [
+                            'Enhanced university website and LMS, boosting user engagement and reliability.',
+                            'Built MIS applications (desktop + web) for efficient data management and reporting.',
+                            'Ensured high system availability and security through server administration.',
+                            'Provided technical training and support, improving adoption across departments.',
+                        ]
+                    },
+                    {
+                        period: '2020 — 2022',
+                        title: 'Web Developer',
+                        org: 'N Technologies',
+                        type: 'On-site',
+                        details: [
+                            'Built scalable web applications with Django for multi-user environments.',
+                            'Designed responsive UIs with Figma, Tailwind CSS, and Bootstrap.',
+                            'Applied unit testing and security best practices, increasing code quality.',
+                            'Enabled efficient team collaboration with Git-based workflows.',
+                        ]
+                    },
+                    {
+                        period: '2018 — 2020',
+                        title: 'Web Designer',
+                        org: 'Child Education Supporting Foundation (CESF)',
+                        type: 'Remote',
+                        details: [
+                            'Designed and delivered responsive web applications, improving user satisfaction.',
+                            'Created wireframes and UIs with Bootstrap and HTML/CSS for clean, functional design.',
+                            'Implemented feature improvements based on user feedback cycles.',
+                        ]
+                    },
+                ],
+                skills: [
+                    { name: 'Python', category: 'language' },
+                    { name: 'PHP', category: 'language' },
+                    { name: 'JavaScript', category: 'language' },
+                    { name: 'C#', category: 'language' },
+                    { name: 'Vue.js 3', category: 'frontend' },
+                    { name: 'React', category: 'frontend' },
+                    { name: 'Tailwind CSS', category: 'frontend' },
+                    { name: 'Django', category: 'backend' },
+                    { name: 'Laravel', category: 'backend' },
+                    { name: 'FastAPI', category: 'backend' },
+                    { name: 'NestJS', category: 'backend' },
+                    { name: 'PostgreSQL', category: 'database' },
+                    { name: 'MySQL', category: 'database' },
+                    { name: 'Docker', category: 'devops' },
+                    { name: 'Git', category: 'devops' },
+                    { name: 'Vim', category: 'tools' },
+                    { name: 'tmux', category: 'tools' },
+                    { name: 'Figma', category: 'tools' },
+                ],
+                projects: [
+                    {
+                        name: 'git-cheatsheet',
+                        desc: 'A minimal, fast Git reference tool with instant search, dark mode, and one-click copy.',
+                        tech: ['tailwind', 'alpine.js'],
+                        url: 'https://github.com/Inayatullahshinwari/git-cheatsheet'
+                    },
+                    {
+                        name: 'gsp-invest-platform',
+                        desc: 'Investment platform with secure document generation, QR code access, and REST API integrations.',
+                        tech: ['django', 'laravel', 'docker'],
+                        url: 'https://github.com/Inayatullahshinwari'
+                    },
+                    {
+                        name: 'aogc-platform',
+                        desc: 'Enterprise platform with ERPNext integration, REST APIs, and workflow automation.',
+                        tech: ['laravel', 'erpnext', 'postgresql', 'docker'],
+                        url: 'https://github.com/Inayatullahshinwari'
                     },
                 ],
                 toggleTheme() {
@@ -399,14 +368,34 @@
                     document.documentElement.classList.toggle('dark', this.dark);
                     localStorage.setItem('portfolio-theme', this.dark ? 'dark' : 'light');
                 },
+                typeWriter() {
+                    let i = 0;
+                    const type = () => {
+                        if (i <= this.fullText.length) {
+                            this.typedText = this.fullText.substring(0, i);
+                            i++;
+                            setTimeout(type, 60 + Math.random() * 40);
+                        }
+                    };
+                    type();
+                },
                 init() {
                     const saved = localStorage.getItem('portfolio-theme');
                     if (saved === 'light') {
                         this.dark = false;
                         document.documentElement.classList.remove('dark');
                     }
+                    this.typeWriter();
+
+                    const sections = this.navItems.map(n => n.id);
                     window.addEventListener('scroll', () => {
-                        this.scrolled = window.scrollY > 20;
+                        for (const id of [...sections].reverse()) {
+                            const el = document.getElementById(id);
+                            if (el && el.getBoundingClientRect().top <= 100) {
+                                this.activeSection = id;
+                                break;
+                            }
+                        }
                     });
                 }
             }
