@@ -224,12 +224,9 @@
                     </template>
                 </div>
 
-                <div class="mt-6 rounded border border-[#2a2a2a] bg-[#111113] p-4">
-                    <div class="flex items-center gap-2 text-sm">
-                        <span class="text-[#22c55e]">$</span>
-                        <span class="text-[#a1a1aa]" x-text="nextProjectText"></span>
-                        <span class="cursor-blink text-[#22c55e]">▊</span>
-                    </div>
+                <div class="mt-6 text-xs text-[#52525b]">
+                    <span>more projects coming soon...</span>
+                    <span class="cursor-blink">▊</span>
                 </div>
             </section>
 
@@ -299,8 +296,6 @@
                 activeSection: 'hero',
                 typedText: '',
                 fullText: 'echo "building systems that scale..."',
-                nextProjectText: '',
-                nextProjectFullText: 'echo "next project loading soon..."',
                 navItems: [
                     { id: 'hero', icon: '◉', file: 'index.js' },
                     { id: 'about', icon: '◈', file: 'about.md' },
@@ -464,19 +459,6 @@
                     };
                     type();
                 },
-                typeNextProject() {
-                    let i = 0;
-                    setTimeout(() => {
-                        const type = () => {
-                            if (i <= this.nextProjectFullText.length) {
-                                this.nextProjectText = this.nextProjectFullText.substring(0, i);
-                                i++;
-                                setTimeout(type, 60 + Math.random() * 40);
-                            }
-                        };
-                        type();
-                    }, 3000);
-                },
                 init() {
                     const saved = localStorage.getItem('portfolio-theme');
                     if (saved === 'light') {
@@ -484,7 +466,6 @@
                         document.documentElement.classList.remove('dark');
                     }
                     this.typeWriter();
-                    this.typeNextProject();
 
                     const sections = this.navItems.map(n => n.id);
                     window.addEventListener('scroll', () => {
