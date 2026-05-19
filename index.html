@@ -233,6 +233,38 @@
                 </div>
             </section>
 
+            <!-- BLOG -->
+            <section id="blog" class="mb-20">
+                <div class="text-sm text-[#22c55e] mb-4">$ cat blog/*.md</div>
+                <div class="space-y-4">
+                    <template x-for="post in blogPosts" :key="post.title">
+                        <a :href="post.url" target="_blank"
+                           class="group block rounded border border-[#2a2a2a] bg-[#111113] p-4 hover:border-[#22c55e]/30 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <span class="text-sm font-medium text-[#e4e4e7] group-hover:text-[#22c55e] transition-colors" x-text="post.title"></span>
+                                        <span x-show="post.tag" class="text-[9px] text-[#60a5fa] bg-[#60a5fa]/10 px-1.5 py-0.5 rounded uppercase tracking-wider" x-text="post.tag"></span>
+                                    </div>
+                                    <div class="text-xs text-[#71717a] mt-1" x-text="post.desc"></div>
+                                    <div class="flex items-center gap-3 mt-2 text-[10px] text-[#52525b]">
+                                        <span x-text="post.date"></span>
+                                        <span>·</span>
+                                        <span x-text="post.readTime"></span>
+                                    </div>
+                                </div>
+                                <span class="text-[#71717a] text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-4">↗</span>
+                            </div>
+                        </a>
+                    </template>
+                </div>
+
+                <div class="mt-4 text-xs text-[#52525b]">
+                    <span>more posts coming soon...</span>
+                    <span class="cursor-blink">▊</span>
+                </div>
+            </section>
+
             <!-- CONTACT -->
             <section id="contact" class="mb-20">
                 <div class="text-sm text-[#22c55e] mb-4">$ ./contact.sh</div>
@@ -275,6 +307,7 @@
                     { id: 'experience', icon: '◈', file: 'experience.log' },
                     { id: 'skills', icon: '◈', file: 'skills/' },
                     { id: 'projects', icon: '◈', file: 'projects/' },
+                    { id: 'blog', icon: '◈', file: 'blog/' },
                     { id: 'contact', icon: '◈', file: 'contact.sh' },
                 ],
                 timeline: [
@@ -387,6 +420,32 @@
                         tech: ['tauri', 'nestjs', 'prisma'],
                         url: '',
                         wip: true
+                    },
+                ],
+                blogPosts: [
+                    {
+                        title: 'Designing REST APIs That Scale',
+                        desc: 'Lessons learned from building APIs serving thousands of requests with Laravel and FastAPI.',
+                        date: '2025-05-01',
+                        readTime: '8 min read',
+                        tag: 'backend',
+                        url: '#'
+                    },
+                    {
+                        title: 'Docker in Production: What Nobody Tells You',
+                        desc: 'Common pitfalls and best practices from containerizing enterprise applications.',
+                        date: '2025-03-15',
+                        readTime: '6 min read',
+                        tag: 'devops',
+                        url: '#'
+                    },
+                    {
+                        title: 'Why I Switched to Vim (And Never Looked Back)',
+                        desc: 'A practical guide to transitioning from VS Code to Neovim for web development.',
+                        date: '2025-01-20',
+                        readTime: '5 min read',
+                        tag: 'tools',
+                        url: '#'
                     },
                 ],
                 toggleTheme() {
